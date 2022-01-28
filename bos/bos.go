@@ -22,7 +22,7 @@ import (
 	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
 
-	"github.com/thanos-io/thanos/pkg/objstore"
+	"github.com/brancz/objstore"
 )
 
 // partSize 128MB.

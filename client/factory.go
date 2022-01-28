@@ -14,15 +14,15 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 	yaml "gopkg.in/yaml.v2"
 
-	"github.com/thanos-io/thanos/pkg/objstore"
-	"github.com/thanos-io/thanos/pkg/objstore/azure"
-	"github.com/thanos-io/thanos/pkg/objstore/bos"
-	"github.com/thanos-io/thanos/pkg/objstore/cos"
-	"github.com/thanos-io/thanos/pkg/objstore/filesystem"
-	"github.com/thanos-io/thanos/pkg/objstore/gcs"
-	"github.com/thanos-io/thanos/pkg/objstore/oss"
-	"github.com/thanos-io/thanos/pkg/objstore/s3"
-	"github.com/thanos-io/thanos/pkg/objstore/swift"
+	"github.com/brancz/objstore"
+	"github.com/brancz/objstore/azure"
+	"github.com/brancz/objstore/bos"
+	"github.com/brancz/objstore/cos"
+	"github.com/brancz/objstore/filesystem"
+	"github.com/brancz/objstore/gcs"
+	"github.com/brancz/objstore/oss"
+	"github.com/brancz/objstore/s3"
+	"github.com/brancz/objstore/swift"
 )
 
 type ObjProvider string
@@ -45,7 +45,7 @@ type BucketConfig struct {
 
 // NewBucket initializes and returns new object storage clients.
 // NOTE: confContentYaml can contain secrets.
-func NewBucket(logger log.Logger, confContentYaml []byte, reg prometheus.Registerer, component string) (objstore.InstrumentedBucket, error) {
+func NewBucket(logger log.Logger, confContentYaml []byte, reg prometheus.Registerer, component string) (objstore.Bucket, error) {
 	level.Info(logger).Log("msg", "loading bucket configuration")
 	bucketConf := &BucketConfig{}
 	if err := yaml.UnmarshalStrict(confContentYaml, bucketConf); err != nil {
@@ -81,5 +81,5 @@ func NewBucket(logger log.Logger, confContentYaml []byte, reg prometheus.Registe
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("create %s client", bucketConf.Type))
 	}
-	return objstore.NewTracingBucket(objstore.BucketWithMetrics(bucket.Name(), bucket, reg)), nil
+	return bucket, nil
 }

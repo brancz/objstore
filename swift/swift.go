@@ -21,8 +21,8 @@ import (
 	"github.com/prometheus/common/model"
 	"gopkg.in/yaml.v2"
 
-	"github.com/thanos-io/thanos/pkg/objstore"
-	"github.com/thanos-io/thanos/pkg/runutil"
+	"github.com/brancz/objstore"
+	"github.com/brancz/objstore/runutil"
 )
 
 const (

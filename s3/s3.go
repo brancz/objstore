@@ -28,8 +28,8 @@ import (
 	"github.com/prometheus/common/version"
 	"gopkg.in/yaml.v2"
 
-	"github.com/thanos-io/thanos/pkg/objstore"
-	"github.com/thanos-io/thanos/pkg/runutil"
+	"github.com/brancz/objstore"
+	"github.com/brancz/objstore/runutil"
 )
 
 type ctxKey int
